@@ -15,7 +15,7 @@ WORKDIR /app
 
 # Сначала только манифесты: правка app/ не инвалидирует слой с зависимостями.
 COPY pyproject.toml uv.lock ./
-RUN uv sync --frozen --extra dev --no-install-project
+RUN uv sync --frozen --no-install-project
 
 # ---- runtime stage --------------------------------------------------------
 FROM python:3.12.16-slim-trixie@sha256:191083cdf6c7bda8c76158983163ead5d5cf7b77cf3033e805bb0f5296f51b4b AS runtime

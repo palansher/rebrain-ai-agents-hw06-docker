@@ -74,3 +74,22 @@
 36.8MB     RUN /bin/sh -c set -eux;   savedAptMark="$(apt-mark showmanual)";  apt
 3.81MB     RUN /bin/sh -c set -eux;  apt-get update;  apt-get install -y --no-ins
 ```
+
+## step4-final
+
+| Метрика | Значение |
+| --- | --- |
+| Размер образа | 160 MB |
+| Холодная сборка | 2 s |
+| **Тёплая пересборка** | **1 s** |
+| Слоёв в истории | 16 |
+
+Самые тяжёлые шаги:
+
+```
+7.7kB      COPY app ./app # buildkit
+40.7MB     COPY /app/.venv /app/.venv # buildkit
+36B        RUN /bin/sh -c set -eux;  for src in idle3 pip3 pydoc3 python3 python3
+36.8MB     RUN /bin/sh -c set -eux;   savedAptMark="$(apt-mark showmanual)";  apt
+3.81MB     RUN /bin/sh -c set -eux;  apt-get update;  apt-get install -y --no-ins
+```

@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.12"
 resolution-markers = [
     "python_full_version >= '3.14' and sys_platform == 'win32'",
@@ -232,13 +232,15 @@ version = "1.0.0"
 source = { virtual = "." }
 dependencies = [
     { name = "fastapi" },
-    { name = "numpy" },
-    { name = "pandas" },
     { name = "pydantic" },
     { name = "uvicorn", extra = ["standard"] },
 ]
 
 [package.optional-dependencies]
+analytics = [
+    { name = "numpy" },
+    { name = "pandas" },
+]
 dev = [
     { name = "httpx" },
     { name = "pytest" },
@@ -248,13 +250,13 @@ dev = [
 requires-dist = [
     { name = "fastapi", specifier = ">=0.115" },
     { name = "httpx", marker = "extra == 'dev'", specifier = ">=0.27" },
-    { name = "numpy", specifier = ">=2.0" },
-    { name = "pandas", specifier = ">=2.2" },
+    { name = "numpy", marker = "extra == 'analytics'", specifier = ">=2.0" },
+    { name = "pandas", marker = "extra == 'analytics'", specifier = ">=2.2" },
     { name = "pydantic", specifier = ">=2.9" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.3" },
     { name = "uvicorn", extras = ["standard"], specifier = ">=0.32" },
 ]
-provides-extras = ["dev"]
+provides-extras = ["analytics", "dev"]
 
 [[package]]
 name = "numpy"
