@@ -1,0 +1,3 @@
+launch-control:optimized
+Total: 225 (UNKNOWN: 15, LOW: 77, MEDIUM: 79, HIGH: 54, CRITICAL: 0)
+Total: 7 (UNKNOWN: 0, LOW: 1, MEDIUM: 6, HIGH: 0, CRITICAL: 0)

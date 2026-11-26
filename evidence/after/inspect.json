@@ -1,0 +1,76 @@
+[
+    {
+        "Id": "sha256:ee2683f07f4b982b4cf1235992740f2884f85cfb5a278a037b5a73247f083370",
+        "RepoTags": [
+            "launch-control:optimized"
+        ],
+        "RepoDigests": [],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-11-27T02:14:29.175988963+03:00",
+        "Config": {
+            "User": "10001:10001",
+            "ExposedPorts": {
+                "8000/tcp": {}
+            },
+            "Env": [
+                "PATH=/app/.venv/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+                "PYTHON_VERSION=3.12.16",
+                "PYTHON_SHA256=b5796915dc45ff745cfb4e990a7e7c93d6f546328a102ce31448d69ebc37575c",
+                "PYTHONUNBUFFERED=1",
+                "PYTHONDONTWRITEBYTECODE=1"
+            ],
+            "Cmd": [
+                "uvicorn",
+                "app.main:app",
+                "--host",
+                "0.0.0.0",
+                "--port",
+                "8000"
+            ],
+            "WorkingDir": "/app",
+            "ArgsEscaped": true,
+            "Healthcheck": {
+                "Test": [
+                    "CMD",
+                    "python",
+                    "-c",
+                    "import sys, urllib.request; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2).status == 200 else 1)"
+                ],
+                "Interval": 30000000000,
+                "Timeout": 3000000000,
+                "StartPeriod": 5000000000,
+                "Retries": 3
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 160175554,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/7ezi3i3bixze6bw5dfm9s8op5/diff:/var/lib/docker/overlay2/03tluqmzlbmmzz7kf06c6wxwg/diff:/var/lib/docker/overlay2/ua2dbnvxe6659pva4xnniw5fy/diff:/var/lib/docker/overlay2/1870728a9ba345007b18d840e298f9906f5d0d2df1df28aa13f95ada799e3f4f/diff:/var/lib/docker/overlay2/a328e467bb3d18024e3717bd44bc75aa3dfac8520e8d0852ef249b30bf4f6f1d/diff:/var/lib/docker/overlay2/f183ec607dd1f3cbde63deb97fa916b38b83d52df6e73f025dfd8b91f45da42b/diff:/var/lib/docker/overlay2/1f568157cca2e37ed5ba21e492e15a1b8a1f63913dedd2db3622de2bf0d351ac/diff",
+                "MergedDir": "/var/lib/docker/overlay2/5re1x98zp4nw39606p3tiaf8b/merged",
+                "UpperDir": "/var/lib/docker/overlay2/5re1x98zp4nw39606p3tiaf8b/diff",
+                "WorkDir": "/var/lib/docker/overlay2/5re1x98zp4nw39606p3tiaf8b/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:54ae9782e24f4abba5eebc5cc388f983b590abb011b69f20e0e592240bb7a698",
+                "sha256:dc8af65e94dc68431087c659ec8fe872bd0554ddbfd8c82fdab7ce035d778857",
+                "sha256:e1beed03d15a898c7106b87ab2c37ddd392bd1f69b08600b6c886b5b80bc1ae6",
+                "sha256:7283aa26293991a17d79b1cdb1da7786e3242b5caa67439cec6964ee545ff2b8",
+                "sha256:819b6959a85acbd82fafebe7b496f7e31b132f7bbafc0de89453d651f2d78c68",
+                "sha256:57c151214161596d021fa77fcf1ac9b315db883e533b48f9f3ecc31553406331",
+                "sha256:65ee42f6ecadc8ccb57b622b5dfc8e4e1a6aeb1d2857a11eef0666a7e20b4edb",
+                "sha256:0ea8de6c2a5795d8f3d0be2ef2b60f8e58b9a0b39bdb1b43df72a67c4020a841"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-11-27T02:14:29.436450999+03:00"
+        }
+    }
+]
