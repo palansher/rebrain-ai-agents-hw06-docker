@@ -1,0 +1,15 @@
+docker build --progress=plain (первый билд после добавления .dockerignore):
+  #5 transferring context: 220.39kB done
+
+du -sb отобранных файлов:
+7700	app
+24573	tests
+921	tools
+908	pyproject.toml
+190105	uv.lock
+11793	scripts
+803	Dockerfile
+41	.gitignore
+
+исключённый .venv:
+144632911	.venv
