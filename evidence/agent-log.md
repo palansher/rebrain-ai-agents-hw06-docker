@@ -76,3 +76,89 @@ AGENT (ключевое):
 
 DECISION:
 принято; базой выбрана python:3.12.16-slim-trixie (0 CRITICAL, glibc), см. analysis-task-docker.md §9.
+
+---
+
+## Шаг 3. `.dockerignore` — 2026-11-27
+
+PROMPT (P2):
+«Исключи .git/.venv/кэши/тесты/tools/evidence; tests/ пока оставь (baseline делает RUN pytest);
+измерь контекст; затем ./scripts/bench.sh step1-dockerignore; покажи diff, не коммить».
+
+AGENT (ключевое):
+контекст 324.60 kB → 220.39 kB; `.venv` 144.6 MB исключён; образ не изменился (1412 MB), score 1/9.
+Первый прогон `bench.sh` показал «transferring context: 1.14 kB» — это дельта кэша BuildKit,
+а не реальный контекст; для честного числа использовали первый билд после изменения `.dockerignore`.
+
+DECISION:
+принято. Зафиксировали: `.dockerignore` не уменьшает образ, он уменьшает контекст и страхует от утечек.
+
+---
+
+## Шаг 4. Slim-база — 2026-11-27
+
+PROMPT (P3):
+«Замени базу на python:3.12.16-slim-trixie@sha256:1910…, остальную логику одноступенчатой сборки сохрани;
+USER/HEALTHCHECK/секрет не трогай; hadolint будет ругаться — не подавляй».
+
+AGENT (ключевое):
+1412 → 811 MB, 21 слой, cold 61 s, warm 12 s, score 1/9.
+
+DECISION:
+принято. Warm вырос из-за переустановки apt/pip на slim — это ожидаемо и будет убрано multi-stage.
+
+---
+
+## Шаг 5. Multi-stage — 2026-11-27
+
+PROMPT (P4):
+«builder ставит зависимости по uv.lock, runtime — только venv и app; убери RUN pytest и добавь tests/ в
+.dockerignore; зависимости до COPY app; extra dev сохрани; USER/HEALTHCHECK не добавляй».
+
+AGENT (ключевое):
+311 MB, 16 слоёв, cold 10 s, warm 0 s, score 6/9 (зелёные 1,4,5,6,7,8,9; красные root и HEALTHCHECK).
+Зависимости действительно ставятся до исходников: в warm-логе `uv sync` — CACHED, меняется только COPY app.
+
+DECISION:
+принято. Заодно ушли `ADMIN_TOKEN` и shell-CMD — поэтому score вырос сразу до 6/9, а не до 4/9.
+
+---
+
+## Шаг 6. Smoke — 2026-11-27
+
+PROMPT (P5):
+«Создай scripts/smoke.sh: 4 эндпоинта, 5 миссий, коды 200/409, ожидание готовности, trap, exit 1 при ошибке;
+негативный тест — образ с портом 8001, smoke должен упасть».
+
+AGENT (ключевое):
+positive: все проверки ✓, exit 0; negative: сервис слушает 8001, `/health` на 8000 недоступен → exit 1.
+
+DECISION:
+принято. Скрипт не «мягкий»: падает и по коду, и по телу ответа (5 миссий, 600 секунд, status=counting).
+
+---
+
+## Шаг 7. Зависимости — 2026-11-27
+
+PROMPT (P6):
+«pandas/numpy — в extra analytics (не удалять), uv lock, из Dockerfile убрать extra dev; покажи Δ и проверки».
+
+AGENT (ключевое):
+`uv lock` попытался записать внутренний Nexus (см. шаг 1) — выполнено с `--default-index https://pypi.org/simple`;
+lock чистый (`vs-nexus` = 0). 311 → 160 MB, warm 1 s, score 7/9. Тесты 18 passed, analytics-скрипт работает.
+
+DECISION:
+принято; Δ −151 MB — это в основном pandas+numpy (≈100 MB) плюс dev-пакеты.
+
+---
+
+## Шаг 8. Hardening — 2026-11-27
+
+PROMPT (P7):
+«non-root uid 10001, HEALTHCHECK на stdlib, ADMIN_TOKEN убрать, CMD JSON, база с digest, hadolint 0/0».
+
+AGENT (ключевое):
+score 9/9; hadolint exit 0; `User=10001:10001`, `Health=yes`, статус `healthy`, uid 10001; `ADMIN_TOKEN` — 0.
+
+DECISION:
+принято. 9/9 достигнуто без ослабления проверок (score/bench/hadolint не менялись).
