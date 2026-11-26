@@ -1,0 +1,15 @@
+
+=== smoke: launch-control:step4-final (порт 18000) ===
+  [32m✓[0m GET /health -> 200 (200)
+  [32m✓[0m GET /health: status=ok (ok)
+  [32m✓[0m GET /api/v1/launches -> 200 (200)
+  [32m✓[0m GET /api/v1/launches: 5 миссий (5)
+  [32m✓[0m есть LC-101 (LC-101)
+  [32m✓[0m POST LC-101/countdown -> 200 (200)
+  [32m✓[0m LC-101: status=counting (counting)
+  [32m✓[0m LC-101: t_minus_seconds=600 (600)
+  [32m✓[0m POST LC-102/countdown -> 409 (409)
+  [32m✓[0m GET /api/v1/launches/LC-999 -> 404 (404)
+  [32m✓[0m контейнер остался running (true)
+
+SMOKE OK
