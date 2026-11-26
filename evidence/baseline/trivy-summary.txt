@@ -1,0 +1,6 @@
+launch-control:baseline
+
+debian 13.8:
+Total: 2924 (UNKNOWN: 511, LOW: 1471, MEDIUM: 745, HIGH: 194, CRITICAL: 3)
+python-pkg:
+Total: 3 (UNKNOWN: 0, LOW: 1, MEDIUM: 1, HIGH: 1, CRITICAL: 0)
