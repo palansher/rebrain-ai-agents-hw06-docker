@@ -5,12 +5,10 @@ __pycache__/
 *.pyc
 .pytest_cache/
 
-# не рантайм: офлайн-аналитика, доказательства, служебные файлы
+# не рантайм: тесты, офлайн-аналитика, доказательства, служебные файлы
+tests/
 tools/
 evidence/
 bench-results.md
 *.md
 *.log
-
-# tests/ пока остаются в контексте: baseline-Dockerfile выполняет `RUN pytest`.
-# Исключим на шаге multi-stage, когда pytest будет убран из сборки.

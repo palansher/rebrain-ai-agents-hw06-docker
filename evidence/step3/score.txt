@@ -1,0 +1,15 @@
+
+=== score: launch-control:step3-multistage ===
+
+  [32m✓[0m Размер <= 400 MB                     311 MB
+  [31m✗[0m Работает не от root                  root
+  [31m✗[0m Есть HEALTHCHECK                     
+  [32m✓[0m Нет компилятора в runtime            
+  [31m✗[0m Нет dev-инструментов                 найдено: pytest 
+  [32m✓[0m Тесты и мусор не едут в образ        
+  [32m✓[0m Нет секретов в ENV и в истории       
+  [32m✓[0m .dockerignore есть                   11 правил
+  [32m✓[0m hadolint чист (>= warning)           info: 0
+
+  Готово: 6/9
+
