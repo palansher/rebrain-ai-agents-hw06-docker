@@ -36,3 +36,22 @@
 58.1MB     RUN /bin/sh -c pip install uv # buildkit
 17.8MB     RUN /bin/sh -c pip install --upgrade pip # buildkit
 ```
+
+## step2-slim
+
+| Метрика | Значение |
+| --- | --- |
+| Размер образа | 811 MB |
+| Холодная сборка | 61 s |
+| **Тёплая пересборка** | **12 s** |
+| Слоёв в истории | 21 |
+
+Самые тяжёлые шаги:
+
+```
+7.71MB     RUN /bin/sh -c pytest -q # buildkit
+149MB      RUN /bin/sh -c uv pip install --system -r pyproject.toml --extra dev #
+237kB      COPY . . # buildkit
+58.1MB     RUN /bin/sh -c pip install uv # buildkit
+17.8MB     RUN /bin/sh -c pip install --upgrade pip # buildkit
+```

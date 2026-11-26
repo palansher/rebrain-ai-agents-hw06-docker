@@ -1,0 +1,15 @@
+
+=== score: launch-control:step2-slim ===
+
+  [31m✗[0m Размер <= 400 MB                     811 MB
+  [31m✗[0m Работает не от root                  root
+  [31m✗[0m Есть HEALTHCHECK                     
+  [31m✗[0m Нет компилятора в runtime            найдено: gcc cc g++ make 
+  [31m✗[0m Нет dev-инструментов                 найдено: git vim curl pytest uv 
+  [31m✗[0m Тесты и мусор не едут в образ        внутри: /app/tests /app/pyproject.toml 
+  [31m✗[0m Нет секретов в ENV и в истории       ADMIN_TOKEN в Config.Env
+  [32m✓[0m .dockerignore есть                   10 правил
+  [31m✗[0m hadolint чист (>= warning)           0 error, 7 warning
+
+  Готово: 1/9
+

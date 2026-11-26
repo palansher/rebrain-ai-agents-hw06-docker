@@ -2,7 +2,9 @@
 # Образ собирается, тесты внутри проходят, сервис работает - поэтому файл не трогали три релиза.
 # Это заведомо плохая упаковка: её и предстоит привести в порядок через агента.
 
-FROM python:3.12
+# python:3.12.16-slim-trixie, manifest-list digest.
+# slim: без компиляторов и dev-пакетов в базе; trixie: 0 CRITICAL в trivy на момент работы.
+FROM python:3.12.16-slim-trixie@sha256:191083cdf6c7bda8c76158983163ead5d5cf7b77cf3033e805bb0f5296f51b4b
 
 ENV ADMIN_TOKEN=launch-control-dev-token
 ENV PYTHONUNBUFFERED=1
