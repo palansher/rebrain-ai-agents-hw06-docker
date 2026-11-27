@@ -41,6 +41,7 @@ PROMPT (P0):
 после baseline — локальные тесты. Покажи фактический вывод и таблицу».
 
 AGENT (ключевое):
+
 - размер 1412 MB, 24 слоя, cold 100 s, warm 6 s, контекст 324.60 kB;
 - score 0/9; hadolint 0 error / 7 warning / 5 info; trivy debian 2924 (HIGH 194, CRITICAL 3);
 - тесты 18 passed (в задании 17).
@@ -60,6 +61,7 @@ PROMPT (P1):
 предложи приёмы и отдельно — что отверг и почему».
 
 AGENT (ключевое):
+
 1. Дефекты: полная база python:3.12; apt build-essential/git/vim/curl; незапиненные pip/uv;
    `COPY . .` до установки зависимостей; `--extra dev` в runtime; `RUN pytest` и tests в образе;
    `ENV ADMIN_TOKEN`; нет `.dockerignore`; root; нет HEALTHCHECK; CMD в shell-форме; база не запинена.
