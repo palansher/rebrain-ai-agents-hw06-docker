@@ -61,6 +61,7 @@ README.md               # этот файл
 docker build -t launch-control:optimized .
 ./scripts/score.sh optimized           # 9/9
 ./scripts/smoke.sh launch-control:optimized
+./scripts/verify.sh                    # независимая приёмка (человек)
 uv run --frozen --extra dev pytest -q  # 18 тестов
 uv run --frozen --extra analytics python -m tools.analyze_launches
 ```
